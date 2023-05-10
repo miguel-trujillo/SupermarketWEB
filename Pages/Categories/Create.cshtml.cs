@@ -13,8 +13,8 @@ namespace SupermarketWEB.Pages.Categories
         {
             _context = context;
         }
-        public IActionResult OnGet() 
-        { 
+        public IActionResult OnGet()
+        {
             return Page();
         }
         [BindProperty]
