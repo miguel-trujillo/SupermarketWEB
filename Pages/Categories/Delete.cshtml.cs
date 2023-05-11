@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using SupermarketWEB.Data;
 using SupermarketWEB.Models;
 
@@ -16,23 +15,30 @@ namespace SupermarketWEB.Pages.Categories
         }
         [BindProperty]
         public Category Category { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
+
             var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null) 
+
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Category= category;
+                Category = category;
             }
-            return Page();           
+            return Page();
         }
+
+
+
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -40,12 +46,14 @@ namespace SupermarketWEB.Pages.Categories
                 return NotFound();
             }
             var category = await _context.Categories.FindAsync(id);
+
             if (category != null)
-            { 
-                Category= category;
-                _context.Categories.Remove(category);
+            {
+                Category = category;
+                _context.Categories.Remove(Category);
                 await _context.SaveChangesAsync();
             }
+
             return RedirectToPage("./Index");
         }
     }
